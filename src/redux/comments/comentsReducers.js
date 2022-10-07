@@ -12,9 +12,15 @@ const getComments = (state, { type, payload }) => {
   );
   return stateChanged;
 };
+const deleteComment = (state, { type, payload }) => {
+  // return state.filter
+  console.log(payload);
+  return state.filter((comment) => comment.id !== payload);
+};
 const commentReducer = createReducer([], {
   [actions.addCommentSuccess]: addComment,
   [actions.getCommentsSuccess]: getComments,
+  [actions.deleteCommentSuccess]: deleteComment,
 });
 const rootReducer2 = combineReducers({
   comments: commentReducer,

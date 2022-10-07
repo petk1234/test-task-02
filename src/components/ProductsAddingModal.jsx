@@ -40,7 +40,12 @@ export default function ProductsAddingModal({
         <label>Height</label>
         <input value={height} onChange={(e) => setHeight(e.target.value)} />
         <label>Weight</label>
-        <input value={weight} onChange={(e) => setWeight(e.target.value)} />
+        <input
+          value={weight}
+          onChange={(e) => {
+            !isNaN(Number(e.target.value)) && setWeight(e.target.value);
+          }}
+        />
         <label>Photo</label>
         <input value={photo} onChange={(e) => setPhoto(e.target.value)} />
 

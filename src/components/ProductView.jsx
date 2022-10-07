@@ -48,6 +48,7 @@ export default function ProductView() {
         <>
           <p>Name: {productInfo.name}</p>
           <img src={productInfo.photo} referrerPolicy="no-referrer"></img>
+          <p>Count: {productInfo.count}</p>
           <p>Height: {productInfo.size.height}</p>
           <p>Width: {productInfo.size.width}</p>
           <p>Weight: {productInfo.weight}</p>

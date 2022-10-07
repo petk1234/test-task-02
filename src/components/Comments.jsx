@@ -6,9 +6,8 @@ import productsOperations from "../redux/products/productsOperations";
 export default function Comments({ productInfo, addComment, setComments }) {
   const [comment, setComment] = useState("");
   const parsedInfo = JSON.parse(productInfo);
-  const { name, count, width, height, weight, photo, comments, id } =
-    parsedInfo;
-
+  const { name, count, size, weight, photo, comments, id } = parsedInfo;
+  const { width, height } = size;
   let date = new Date();
   let dd = String(date.getDate()).padStart(2, "0");
   let mm = String(date.getMonth() + 1).padStart(2, "0");
@@ -18,8 +17,9 @@ export default function Comments({ productInfo, addComment, setComments }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("aas");
     dispatch(commentsOperations.getComments(id));
-  }, [comment]);
+  }, []);
 
   const handleCommentAdding = (e) => {
     const formedComment = {
@@ -41,9 +41,10 @@ export default function Comments({ productInfo, addComment, setComments }) {
         formedComment,
       })
     );
-    dispatch(commentsOperations.getComments(id));
+    // dispatch(commentsOperations.getComments(id));
   };
   const commentsFromServer = useSelector((state) => state.comments.comments);
+  console.log(commentsFromServer);
   return (
     <>
       <h1>Comments</h1>
@@ -53,16 +54,25 @@ export default function Comments({ productInfo, addComment, setComments }) {
           onChange={(e) => setComment(e.target.value)}
         ></input>
         <button onClick={handleCommentAdding}>Add your comment</button>
-        {commentsFromServer[commentsFromServer.length - 1] !== undefined && (
-          <ul>
-            {commentsFromServer.map((commentFromServer) => (
-              <Comment
-                key={commentFromServer.id || 3241312}
-                commentFromServer={commentFromServer}
-              ></Comment>
-            ))}
-          </ul>
-        )}
+        <ul>
+          {/* {commentsFromServer.map((commentFromServer) => {
+            return (
+              commentFromServer.id && (
+                <Comment
+                  key={commentFromServer.id}
+                  commentFromServer={commentFromServer}
+                ></Comment>
+              )
+            );
+          })} */}
+          {commentsFromServer.map((commentFromServer) => (
+            <Comment
+              key={commentFromServer.id}
+              commentFromServer={commentFromServer}
+              parsedInfo={parsedInfo}
+            ></Comment>
+          ))}
+        </ul>
       </form>
     </>
   );
